@@ -1,27 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useEffect } from "react";
+import { PostsProvider } from "../App";
 import Post from "./Post";
 
 function Form() {
-  const URL = "https://jsonplaceholder.typicode.com/posts/";
-  const [posts, setPosts] = useState([]);
+  const path = window.location.pathname.toLowerCase();
   const [text, setText] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
+  const [posts, setPosts, URL] = useContext(PostsProvider);
 
-  useEffect(() => {
-    getPosts();
-  }, []);
-
-  const getPosts = async () => {
-    try {
-      const response = await fetch(URL);
-      const data = await response.json();
-      setPosts(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!text) {
@@ -111,7 +99,12 @@ function Form() {
         </div>
       </form>
       <div className="post-container">
-        <Post posts={posts} deletePost={deletePost} editPost={editPost} />
+        <Post
+          posts={posts}
+          deletePost={deletePost}
+          editPost={editPost}
+          path={path}
+        />
       </div>
     </section>
   );

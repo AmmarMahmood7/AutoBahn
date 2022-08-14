@@ -1,6 +1,7 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-const Post = ({ posts, deletePost, editPost }) => {
+
+const Post = ({ posts, deletePost, editPost, ...props }) => {
   return (
     <div className="post-list">
       {posts.map((item) => {
@@ -16,7 +17,7 @@ const Post = ({ posts, deletePost, editPost }) => {
                   editPost(id);
                 }}
               >
-                <FaEdit />
+                {props.path == "/form" ? <FaEdit /> : ""}
               </button>
               <button
                 type="button"
@@ -25,7 +26,7 @@ const Post = ({ posts, deletePost, editPost }) => {
                   deletePost(id);
                 }}
               >
-                <FaTrash />
+                {props.path == "/form" ? <FaTrash /> : ""}
               </button>
             </div>
           </article>
